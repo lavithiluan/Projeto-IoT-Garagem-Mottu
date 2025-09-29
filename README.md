@@ -1,7 +1,6 @@
 # 🚗 Projeto IoT - Garagem Mottu
 
-Este projeto foi desenvolvido com foco em **IoT e prototipagem**.  
-O objetivo é demonstrar uma solução que integra **Arduino**, **Node-RED** e **Tinkercad**, com protótipo real e dashboard para monitoramento em tempo real.
+Este projeto foi desenvolvido com foco em **IoT e prototipagem**. O objetivo é demonstrar uma solução que integra **Arduino**, **Node-RED** e **Tinkercad**, com protótipo real e dashboard para monitoramento em tempo real.
 
 ---
 
