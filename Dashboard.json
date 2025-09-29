@@ -1,0 +1,183 @@
+[
+    {
+        "id": "a525ce2e44c376ac",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b3f0ea5fd8bc343d",
+        "type": "serial in",
+        "z": "a525ce2e44c376ac",
+        "name": "",
+        "serial": "930dc3345253d387",
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "70b773a59337d0bc"
+            ]
+        ]
+    },
+    {
+        "id": "70b773a59337d0bc",
+        "type": "json",
+        "z": "a525ce2e44c376ac",
+        "name": "Json",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "7402d7bf3d29ebb7",
+                "7a5f192957d9fee2",
+                "9cd9e7d28f671e08"
+            ]
+        ]
+    },
+    {
+        "id": "7402d7bf3d29ebb7",
+        "type": "ui_template",
+        "z": "a525ce2e44c376ac",
+        "group": "0d34d69f2af6015a",
+        "name": "Indicador de Status\t",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"\n    text-align: center; \n    padding: 10px; \n    font-size: 18px;\n    font-weight: bold;\n    border-radius: 5px;\n    /* Lógica de cor baseada no status */\n    background-color: \n        {{#if (eq payload.status 'Moto no local correto')}}green;\n        {{else if (eq payload.status 'Moto em movimento / fora da zona segura')}}orange;\n        {{else}}red;\n        {{/if}}\n    color: white;\n\">\n    STATUS: {{payload.status}}\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 810,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7a5f192957d9fee2",
+        "type": "ui_gauge",
+        "z": "a525ce2e44c376ac",
+        "name": "",
+        "group": "0d34d69f2af6015a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Distância da Moto (cm)",
+        "label": "cm",
+        "format": "{{payload.distancia}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#000000",
+            "#ffffff"
+        ],
+        "seg1": "16 ",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 830,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9cd9e7d28f671e08",
+        "type": "ui_chart",
+        "z": "a525ce2e44c376ac",
+        "name": "Gráfico GPS\t",
+        "group": "0d34d69f2af6015a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "GPS Simulado (Potenciômetro)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1023",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 790,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "930dc3345253d387",
+        "type": "serial-port",
+        "name": "Arduino",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": 8,
+        "parity": "none",
+        "stopbits": 1,
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": 10000
+    },
+    {
+        "id": "0d34d69f2af6015a",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "f0375d3b3a4a5b12",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f0375d3b3a4a5b12",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "fe6c1e9cc4df4b69",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-serialport": "2.0.3",
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
