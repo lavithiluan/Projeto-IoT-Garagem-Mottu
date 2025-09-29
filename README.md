@@ -14,7 +14,6 @@ O objetivo é demonstrar uma solução que integra **Arduino**, **Node-RED** e *
 - **Arduino (C++)** → código principal para controle do protótipo.  
 - **Tinkercad** → simulação do circuito eletrônico.  
 - **Node-RED** → dashboard para monitoramento em tempo real.  
-- **GitHub** → versionamento e colaboração.  
 
 ---
 
