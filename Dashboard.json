@@ -8,56 +8,22 @@
         "env": []
     },
     {
-        "id": "b3f0ea5fd8bc343d",
-        "type": "serial in",
-        "z": "a525ce2e44c376ac",
-        "name": "",
-        "serial": "930dc3345253d387",
-        "x": 310,
-        "y": 280,
-        "wires": [
-            [
-                "70b773a59337d0bc"
-            ]
-        ]
-    },
-    {
         "id": "70b773a59337d0bc",
         "type": "json",
         "z": "a525ce2e44c376ac",
         "name": "Json",
         "property": "payload",
         "action": "",
-        "pretty": false,
+        "pretty": true,
         "x": 490,
         "y": 280,
         "wires": [
             [
-                "7402d7bf3d29ebb7",
+                "66b25cc1251bc5a1",
+                "c71965b99a6832ea",
                 "7a5f192957d9fee2",
-                "9cd9e7d28f671e08"
+                "a0eb181a8928eef8"
             ]
-        ]
-    },
-    {
-        "id": "7402d7bf3d29ebb7",
-        "type": "ui_template",
-        "z": "a525ce2e44c376ac",
-        "group": "0d34d69f2af6015a",
-        "name": "Indicador de Status\t",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "format": "<div style=\"\n    text-align: center; \n    padding: 10px; \n    font-size: 18px;\n    font-weight: bold;\n    border-radius: 5px;\n    /* Lógica de cor baseada no status */\n    background-color: \n        {{#if (eq payload.status 'Moto no local correto')}}green;\n        {{else if (eq payload.status 'Moto em movimento / fora da zona segura')}}orange;\n        {{else}}red;\n        {{/if}}\n    color: white;\n\">\n    STATUS: {{payload.status}}\n</div>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 810,
-        "y": 280,
-        "wires": [
-            []
         ]
     },
     {
@@ -78,14 +44,14 @@
         "colors": [
             "#00b500",
             "#000000",
-            "#ffffff"
+            "#ff0000"
         ],
         "seg1": "16 ",
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 830,
-        "y": 200,
+        "x": 750,
+        "y": 180,
         "wires": []
     },
     {
@@ -126,17 +92,126 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 790,
+        "x": 930,
         "y": 360,
         "wires": [
             []
         ]
     },
     {
+        "id": "b3f0ea5fd8bc343d",
+        "type": "serial in",
+        "z": "a525ce2e44c376ac",
+        "name": "",
+        "serial": "930dc3345253d387",
+        "x": 310,
+        "y": 280,
+        "wires": [
+            [
+                "70b773a59337d0bc"
+            ]
+        ]
+    },
+    {
+        "id": "66b25cc1251bc5a1",
+        "type": "debug",
+        "z": "a525ce2e44c376ac",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c71965b99a6832ea",
+        "type": "function",
+        "z": "a525ce2e44c376ac",
+        "name": "Leitura Json",
+        "func": "// Pega o status que vem do nó Json\nvar status = msg.payload.status;\n\n// Define uma variável para a cor\nvar cor;\n\n// Lógica para decidir a cor com base no texto do status\nif (status === \"Moto no local correto\") {\n    cor = \"green\";\n} else if (status === \"Moto em movimento / fora da zona segura\") {\n    cor = \"orange\";\n} else {\n    cor = \"red\";\n}\n\n// Agora, nós criamos o código HTML diretamente aqui\n// Este HTML será enviado para o nó de texto\nvar html_output = `\n<div style=\"\n    width: 100%;\n    padding: 10px;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 18px;\n    color: white;\n    text-align: center;\n    background-color: ${cor};\n\">\n    ${status}\n</div>\n`;\n\n// Trocamos o payload original pelo nosso HTML\nmsg.payload = html_output;\n\n// Enviamos a mensagem para o próximo nó\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "56266c106d1da42a"
+            ]
+        ]
+    },
+    {
+        "id": "56266c106d1da42a",
+        "type": "ui_text",
+        "z": "a525ce2e44c376ac",
+        "group": "0d34d69f2af6015a",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 870,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a0eb181a8928eef8",
+        "type": "change",
+        "z": "a525ce2e44c376ac",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.gps",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 360,
+        "wires": [
+            [
+                "9cd9e7d28f671e08"
+            ]
+        ]
+    },
+    {
+        "id": "0d34d69f2af6015a",
+        "type": "ui_group",
+        "name": "Garagem Mottu",
+        "tab": "f0375d3b3a4a5b12",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "930dc3345253d387",
         "type": "serial-port",
         "name": "Arduino",
-        "serialport": "COM3",
+        "serialport": "COM5",
         "serialbaud": "9600",
         "databits": 8,
         "parity": "none",
@@ -153,17 +228,6 @@
         "responsetimeout": 10000
     },
     {
-        "id": "0d34d69f2af6015a",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "f0375d3b3a4a5b12",
-        "order": 1,
-        "disp": true,
-        "width": 6,
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "f0375d3b3a4a5b12",
         "type": "ui_tab",
         "name": "Home",
@@ -172,12 +236,12 @@
         "hidden": false
     },
     {
-        "id": "fe6c1e9cc4df4b69",
+        "id": "ce5f7cfb7a0dbf2f",
         "type": "global-config",
         "env": [],
         "modules": {
-            "node-red-node-serialport": "2.0.3",
-            "node-red-dashboard": "3.6.6"
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-serialport": "2.0.3"
         }
     }
 ]
