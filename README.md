@@ -38,6 +38,7 @@ Este projeto foi desenvolvido com foco em **IoT e prototipagem**. O objetivo é 
 ### 3. Node-RED (Dashboard)
 - Abra o **Node-RED** no navegador.
 - Vá em **Menu → Import → Clipboard**.
+- Instale os plugin: node-red-node-serialport, node-red-dashboard
 - Copie e cole o conteúdo de `Dashboard.json`.
 - O fluxo/dash será criado automaticamente, incluindo a configuração de entrada serial (Certifique-se de configurar a porta `COM` correta, atualmente está como `COM3` no arquivo).
 
