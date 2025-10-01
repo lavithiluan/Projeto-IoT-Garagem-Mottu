@@ -4,11 +4,6 @@ Este projeto foi desenvolvido com foco em **IoT e prototipagem**. O objetivo é 
 
 ---
 
-## 📹 Vídeo de Apresentação
-👉 [Assista no YouTube](COLOQUE_AQUI_O_LINK)
-
----
-
 ## 💻 Tecnologias Utilizadas
 - **Arduino (C++)** → código principal para controle do protótipo.
 - **Tinkercad** → simulação do circuito eletrônico.
