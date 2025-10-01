@@ -40,7 +40,7 @@ Este projeto foi desenvolvido com foco em **IoT e prototipagem**. O objetivo é 
 - Vá em **Menu → Import → Clipboard**.
 - Instale os plugin: node-red-node-serialport, node-red-dashboard
 - Copie e cole o conteúdo de `Dashboard.json`.
-- O fluxo/dash será criado automaticamente, incluindo a configuração de entrada serial (Certifique-se de configurar a porta `COM` correta, atualmente está como `COM3` no arquivo).
+- O fluxo/dash será criado automaticamente, incluindo a configuração de entrada serial (Certifique-se de configurar a porta `COM` correta).
 
 ### 4. Execução
 - Execute o Node-RED.
@@ -54,7 +54,7 @@ O dashboard é configurado para visualizar os seguintes dados:
 
 | Componente | Dados Exibidos | Descrição |
 | :--- | :--- | :--- |
-| **Indicador de Status** | Texto e Cor | Exibe a mensagem de status da moto (`local correto` em verde, `em movimento` em laranja ou `alerta` em vermelho). |
+| **Indicador de Status** | Texto e Cor | Exibe a mensagem de status da moto (`local correto` em verde, `em movimento` em amarelo ou `alerta` em vermelho). |
 | **Distância da Moto** | Gauge (Medidor) | Mostra a distância lida pelo sensor ultrassônico em **cm**. |
 | **Gráfico GPS** | Gráfico de Linha | Monitora a variação do valor do potenciômetro (simulação do GPS) ao longo do tempo (valor de 0 a 1023). |
 
@@ -62,13 +62,13 @@ O dashboard é configurado para visualizar os seguintes dados:
 
 ## 📊 Resultados Parciais
 - Protótipo funcional no **Tinkercad**.
-- Protótipo **real construído com Arduino** para validação prática.
+- Protótipo **real construído com Arduino** .
 - Código testado e validado no Arduino Uno.
 - Dashboard do **Node-RED** configurado para exibir dados de telemetria.
 
 ---
 
 ## 👨‍💻 Integrantes do Grupo
-- Thiago Henry Dias - Rm5545222
-- Nicolas Dobbeck Mendes - Rm557605
-- José Bezerra Bastos Net - Rm557605
+- Thiago Henry Dias - Rm 5545222
+- Nicolas Dobbeck Mendes - Rm 557605
+- José Bezerra Bastos Net - Rm 557605
