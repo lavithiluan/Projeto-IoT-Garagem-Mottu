@@ -30,7 +30,6 @@ void setup() {
   pinMode(ledVerde, OUTPUT);
   pinMode(ledAmarelo, OUTPUT);
   pinMode(ledVermelho, OUTPUT);
-
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 

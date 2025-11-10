@@ -15,14 +15,12 @@
         "property": "payload",
         "action": "",
         "pretty": true,
-        "x": 490,
+        "x": 450,
         "y": 280,
         "wires": [
             [
-                "66b25cc1251bc5a1",
-                "c71965b99a6832ea",
-                "7a5f192957d9fee2",
-                "a0eb181a8928eef8"
+                "96ddd1c2e4257bb5",
+                "66b25cc1251bc5a1"
             ]
         ]
     },
@@ -50,8 +48,8 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 750,
-        "y": 180,
+        "x": 990,
+        "y": 140,
         "wires": []
     },
     {
@@ -92,8 +90,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 930,
-        "y": 360,
+        "x": 1170,
+        "y": 320,
         "wires": [
             []
         ]
@@ -121,11 +119,12 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 700,
-        "y": 460,
+        "x": 580,
+        "y": 440,
         "wires": []
     },
     {
@@ -140,8 +139,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 280,
+        "x": 950,
+        "y": 240,
         "wires": [
             [
                 "56266c106d1da42a"
@@ -165,8 +164,8 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 870,
-        "y": 280,
+        "x": 1110,
+        "y": 240,
         "wires": []
     },
     {
@@ -188,13 +187,69 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 360,
+        "x": 970,
+        "y": 320,
         "wires": [
             [
                 "9cd9e7d28f671e08"
             ]
         ]
+    },
+    {
+        "id": "96ddd1c2e4257bb5",
+        "type": "function",
+        "z": "a525ce2e44c376ac",
+        "name": "Tradutor",
+        "func": "var dados = msg.payload;\n\n// --- Nomes das Chaves ---\nvar chave_distancia = \"distancia\";\nvar chave_gps = \"gps\";\n\nif (typeof dados !== 'object' || dados === null || dados[chave_distancia] === undefined || dados[chave_gps] === undefined) {\n    node.warn(\"Payload do [Json] não está no formato esperado.\");\n    node.warn(\"Payload recebido foi: \" + JSON.stringify(dados));\n    return null; \n}\n\n// --- DADOS DE TESTE  ---\nvar idRealDaMoto = \"46e32f02-d45f-42ff-af74-f7cbf804a808\"; \nvar codigoRealDaVaga = \"A1\";\n\n// --- MENSAGEM 1: VAGA (Sensor Ultrassônico) ---\nvar distanciaCm = parseInt(dados[chave_distancia]);\nvar statusVaga = (distanciaCm < 20) ? \"ocupada\" : \"disponivel\";\nvar vagaPayload = { \"status\": statusVaga };\n\nvar msgVaga = {\n    topic: \"mottu/patios/1/vagas/\" + codigoRealDaVaga + \"/status\",\n    payload: JSON.stringify(vagaPayload)\n};\n\n// --- MENSAGEM 2: MOTO (Potenciômetro/GPS) ---\nvar potValor = parseInt(dados[chave_gps]);\nvar lat = -23.5505 - (potValor / 10000.0);\nvar lon = -46.6333 - (potValor / 10000.0);\n\n\n// Agora vamos LER o status que veio do Arduino\nvar statusArduino = dados.status;\nvar statusKey = \"\";\n\n// Conversor de PTBR para Ingles \nif (statusArduino === \"Moto no local correto\") {\n    statusKey = \"moto.status.ok\";\n} else if (statusArduino === \"Moto em movimento / fora da zona segura\") {\n    statusKey = \"moto.status.em_movimento\";\n} else if (statusArduino === \"ALERTA! Moto na zona segura, mas não estacionada corretamente\") {\n    statusKey = \"moto.alerta.zona_segura_nao_estacionada\";\n} else {\n    statusKey = dados.status;\n}\n\nvar gpsPayload = { \"lat\": lat, \"lon\": lon, \"status\": statusKey };\n\nvar msgMoto = {\n    topic: \"mottu/motos/\" + idRealDaMoto + \"/localizacao\",\n    payload: JSON.stringify(gpsPayload)\n};\n\n// --- Envio das Mensagens ---\nnode.send(msgVaga);\nnode.send(msgMoto);\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "eef8ee4f52299d19",
+                "a12181830f1b0971"
+            ]
+        ]
+    },
+    {
+        "id": "eef8ee4f52299d19",
+        "type": "mqtt out",
+        "z": "a525ce2e44c376ac",
+        "name": "Node to Java",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "be788b637fefb2af",
+        "x": 770,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a12181830f1b0971",
+        "type": "debug",
+        "z": "a525ce2e44c376ac",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 440,
+        "wires": []
     },
     {
         "id": "0d34d69f2af6015a",
@@ -211,7 +266,7 @@
         "id": "930dc3345253d387",
         "type": "serial-port",
         "name": "Arduino",
-        "serialport": "COM5",
+        "serialport": "COM3",
         "serialbaud": "9600",
         "databits": 8,
         "parity": "none",
@@ -228,6 +283,37 @@
         "responsetimeout": 10000
     },
     {
+        "id": "be788b637fefb2af",
+        "type": "mqtt-broker",
+        "name": "MQTT",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
         "id": "f0375d3b3a4a5b12",
         "type": "ui_tab",
         "name": "Home",
@@ -236,7 +322,7 @@
         "hidden": false
     },
     {
-        "id": "ce5f7cfb7a0dbf2f",
+        "id": "01a163f57991c0dc",
         "type": "global-config",
         "env": [],
         "modules": {
